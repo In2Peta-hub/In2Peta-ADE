@@ -122,11 +122,14 @@ jobs:
             platform: linux
             target: AppImage
             arch: x64
-          - label: Windows x64
-            runner: windows-latest
-            platform: win
-            target: nsis
-            arch: x64
+          # Windows build disabled: @effect/language-service TypeScript patcher
+          # fails on Windows runners with "Cannot read properties of undefined (reading 'ES2022')".
+          # https://github.com/Effect-TS/language-service/issues
+          # - label: Windows x64
+          #   runner: windows-latest
+          #   platform: win
+          #   target: nsis
+          #   arch: x64
     steps:
       - name: Checkout
         uses: actions/checkout@v6
