@@ -131,9 +131,9 @@ function makeFakeCodexBinary(
           ? [`printf "%s\\n" ${JSON.stringify(input.stderr)} >&2`]
           : []),
         'if [ -n "$output_path" ]; then',
-        "  cat > \"$output_path\" <<'__T3CODE_FAKE_CODEX_OUTPUT__'",
+        "  cat > \"$output_path\" <<'__IN2PETAADE_FAKE_CODEX_OUTPUT__'",
         input.output,
-        "__T3CODE_FAKE_CODEX_OUTPUT__",
+        "__IN2PETAADE_FAKE_CODEX_OUTPUT__",
         "fi",
         `exit ${input.exitCode ?? 0}`,
         "",

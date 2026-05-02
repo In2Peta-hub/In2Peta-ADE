@@ -18,7 +18,7 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
     otlpTracesUrl: undefined,
     otlpMetricsUrl: undefined,
     otlpExportIntervalMs: 10_000,
-    otlpServiceName: "t3-server",
+    otlpServiceName: "in2petaade-server",
   } as const;
 
   const openBootstrapFd = Effect.fn(function* (payload: Record<string, unknown>) {
@@ -54,15 +54,15 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
             ConfigProvider.layer(
               ConfigProvider.fromEnv({
                 env: {
-                  T3CODE_LOG_LEVEL: "Warn",
-                  T3CODE_MODE: "desktop",
-                  T3CODE_PORT: "4001",
-                  T3CODE_HOST: "0.0.0.0",
-                  T3CODE_HOME: baseDir,
+                  IN2PETAADE_LOG_LEVEL: "Warn",
+                  IN2PETAADE_MODE: "desktop",
+                  IN2PETAADE_PORT: "4001",
+                  IN2PETAADE_HOST: "0.0.0.0",
+                  IN2PETAADE_HOME: baseDir,
                   VITE_DEV_SERVER_URL: "http://127.0.0.1:5173",
-                  T3CODE_NO_BROWSER: "true",
-                  T3CODE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "false",
-                  T3CODE_LOG_WS_EVENTS: "true",
+                  IN2PETAADE_NO_BROWSER: "true",
+                  IN2PETAADE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "false",
+                  IN2PETAADE_LOG_WS_EVENTS: "true",
                 },
               }),
             ),
@@ -116,15 +116,15 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
             ConfigProvider.layer(
               ConfigProvider.fromEnv({
                 env: {
-                  T3CODE_LOG_LEVEL: "Warn",
-                  T3CODE_MODE: "desktop",
-                  T3CODE_PORT: "4001",
-                  T3CODE_HOST: "0.0.0.0",
-                  T3CODE_HOME: join(os.tmpdir(), "ignored-base"),
+                  IN2PETAADE_LOG_LEVEL: "Warn",
+                  IN2PETAADE_MODE: "desktop",
+                  IN2PETAADE_PORT: "4001",
+                  IN2PETAADE_HOST: "0.0.0.0",
+                  IN2PETAADE_HOME: join(os.tmpdir(), "ignored-base"),
                   VITE_DEV_SERVER_URL: "http://127.0.0.1:5173",
-                  T3CODE_NO_BROWSER: "false",
-                  T3CODE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "false",
-                  T3CODE_LOG_WS_EVENTS: "false",
+                  IN2PETAADE_NO_BROWSER: "false",
+                  IN2PETAADE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "false",
+                  IN2PETAADE_LOG_WS_EVENTS: "false",
                 },
               }),
             ),
@@ -184,10 +184,10 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
             ConfigProvider.layer(
               ConfigProvider.fromEnv({
                 env: {
-                  T3CODE_BOOTSTRAP_FD: String(fd),
-                  T3CODE_NO_BROWSER: "true",
-                  T3CODE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "true",
-                  T3CODE_LOG_WS_EVENTS: "true",
+                  IN2PETAADE_BOOTSTRAP_FD: String(fd),
+                  IN2PETAADE_NO_BROWSER: "true",
+                  IN2PETAADE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "true",
+                  IN2PETAADE_LOG_WS_EVENTS: "true",
                 },
               }),
             ),
@@ -254,7 +254,7 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
             ConfigProvider.layer(
               ConfigProvider.fromEnv({
                 env: {
-                  T3CODE_BOOTSTRAP_FD: String(fd),
+                  IN2PETAADE_BOOTSTRAP_FD: String(fd),
                 },
               }),
             ),
@@ -369,12 +369,12 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
             ConfigProvider.layer(
               ConfigProvider.fromEnv({
                 env: {
-                  T3CODE_MODE: "web",
-                  T3CODE_BOOTSTRAP_FD: String(fd),
-                  T3CODE_HOME: baseDir,
-                  T3CODE_NO_BROWSER: "true",
-                  T3CODE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "true",
-                  T3CODE_LOG_WS_EVENTS: "true",
+                  IN2PETAADE_MODE: "web",
+                  IN2PETAADE_BOOTSTRAP_FD: String(fd),
+                  IN2PETAADE_HOME: baseDir,
+                  IN2PETAADE_NO_BROWSER: "true",
+                  IN2PETAADE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "true",
+                  IN2PETAADE_LOG_WS_EVENTS: "true",
                 },
               }),
             ),
@@ -496,8 +496,8 @@ it.layer(NodeServices.layer)("cli config resolution", (it) => {
             ConfigProvider.layer(
               ConfigProvider.fromEnv({
                 env: {
-                  T3CODE_NO_BROWSER: "false",
-                  T3CODE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "true",
+                  IN2PETAADE_NO_BROWSER: "false",
+                  IN2PETAADE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD: "true",
                 },
               }),
             ),

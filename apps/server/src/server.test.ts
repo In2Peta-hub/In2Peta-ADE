@@ -3481,7 +3481,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
             isRepo: true,
             hasOriginRemote: true,
             isDefaultBranch: false,
-            branch: "t3code/bootstrap-branch",
+            branch: "in2petaade/bootstrap-branch",
             hasWorkingTreeChanges: false,
             workingTree: {
               files: [],
@@ -3497,7 +3497,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
         const createWorktree = vi.fn((_: Parameters<GitCoreShape["createWorktree"]>[0]) =>
           Effect.succeed({
             worktree: {
-              branch: "t3code/bootstrap-branch",
+              branch: "in2petaade/bootstrap-branch",
               path: "/tmp/bootstrap-worktree",
             },
           }),
@@ -3566,7 +3566,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
                 prepareWorktree: {
                   projectCwd: "/tmp/project",
                   baseBranch: "main",
-                  branch: "t3code/bootstrap-branch",
+                  branch: "in2petaade/bootstrap-branch",
                 },
                 runSetupScript: true,
               },
@@ -3589,7 +3589,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
         assert.deepEqual(createWorktree.mock.calls[0]?.[0], {
           cwd: "/tmp/project",
           branch: "main",
-          newBranch: "t3code/bootstrap-branch",
+          newBranch: "in2petaade/bootstrap-branch",
           path: null,
         });
         assert.deepEqual(runForThread.mock.calls[0]?.[0], {
@@ -3622,7 +3622,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
       const createWorktree = vi.fn((_: Parameters<GitCoreShape["createWorktree"]>[0]) =>
         Effect.succeed({
           worktree: {
-            branch: "t3code/bootstrap-branch",
+            branch: "in2petaade/bootstrap-branch",
             path: "/tmp/bootstrap-worktree",
           },
         }),
@@ -3682,7 +3682,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
               prepareWorktree: {
                 projectCwd: "/tmp/project",
                 baseBranch: "main",
-                branch: "t3code/bootstrap-branch",
+                branch: "in2petaade/bootstrap-branch",
               },
               runSetupScript: true,
             },
@@ -3715,7 +3715,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
       const createWorktree = vi.fn((_: Parameters<GitCoreShape["createWorktree"]>[0]) =>
         Effect.succeed({
           worktree: {
-            branch: "t3code/bootstrap-branch",
+            branch: "in2petaade/bootstrap-branch",
             path: "/tmp/bootstrap-worktree",
           },
         }),
@@ -3798,7 +3798,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
               prepareWorktree: {
                 projectCwd: "/tmp/project",
                 baseBranch: "main",
-                branch: "t3code/bootstrap-branch",
+                branch: "in2petaade/bootstrap-branch",
               },
               runSetupScript: true,
             },
@@ -3881,7 +3881,7 @@ it.layer(NodeServices.layer)("server router seam", (it) => {
               prepareWorktree: {
                 projectCwd: "/tmp/project",
                 baseBranch: "main",
-                branch: "t3code/bootstrap-branch",
+                branch: "in2petaade/bootstrap-branch",
               },
               runSetupScript: false,
             },

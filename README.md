@@ -1,11 +1,13 @@
-# T3 Code
+# In2Peta ADE
 
-T3 Code is a minimal web GUI for coding agents (currently Codex and Claude, more coming soon).
+In2Peta ADE is a minimal web GUI for coding agents (currently Codex and Claude, more coming soon).
+
+![In2Peta ADE Home Screen](assets/screenshots/app-home.png)
 
 ## Installation
 
 > [!WARNING]
-> T3 Code currently supports Codex, Claude, and OpenCode.
+> In2Peta ADE currently supports Codex, Claude, and OpenCode.
 > Install and authenticate at least one provider before use:
 >
 > - Codex: install [Codex CLI](https://developers.openai.com/codex/cli) and run `codex login`
@@ -15,30 +17,36 @@ T3 Code is a minimal web GUI for coding agents (currently Codex and Claude, more
 ### Run without installing
 
 ```bash
-npx t3
+npx in2peta-ade
 ```
 
 ### Desktop app
 
-Install the latest version of the desktop app from [GitHub Releases](https://github.com/pingdotgg/t3code/releases), or from your favorite package registry:
+Install the latest version of the desktop app from [GitHub Releases](https://github.com/In2Peta-hub/In2Peta-ADE/releases), or from your favorite package registry:
 
 #### Windows (`winget`)
 
 ```bash
-winget install T3Tools.T3Code
+winget install In2Peta.In2PetaADE
 ```
 
 #### macOS (Homebrew)
 
 ```bash
-brew install --cask t3-code
+brew install --cask in2peta-ade
 ```
 
 #### Arch Linux (AUR)
 
 ```bash
-yay -S t3code-bin
+yay -S in2petaade-bin
 ```
+
+## Screenshots
+
+### Model Picker & New Thread
+
+![Model Picker](assets/screenshots/app-chat.png)
 
 ## Some notes
 
