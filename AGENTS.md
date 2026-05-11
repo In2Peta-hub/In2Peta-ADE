@@ -11,6 +11,16 @@ In2Peta ADE is a minimal web GUI for using coding agents like Codex and Claude.
 
 This repository is a VERY EARLY WIP. Proposing sweeping changes that improve long-term maintainability is encouraged.
 
+## Fork-Specific Release Policy
+
+This repo is a renamed fork of `pingdotgg/t3code`. Upstream syncs can reintroduce upstream release infrastructure, so preserve these fork decisions:
+
+- Do not publish the CLI package to npm for this fork. There is no `npx in2peta` release path, and this fork does not own the upstream `t3` npm package.
+- Keep the `publish_cli` release job disabled unless `vars.IN2PETAADE_PUBLISH_CLI_TO_NPM == 'true'` is intentionally set later.
+- Do not require Blacksmith runners. Use GitHub-hosted runners such as `ubuntu-24.04`, `macos-15`, and `windows-2025` unless the fork explicitly adds self-hosted runner capacity.
+- GitHub Releases with desktop artifacts are the default release target for this fork.
+- External release steps such as Vercel deploy, Discord announcement, or release finalization/version-bump automation should stay opt-in behind fork-specific repository variables.
+
 ## Core Priorities
 
 1. Performance first.
