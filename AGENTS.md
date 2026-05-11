@@ -21,6 +21,16 @@ This repo is a renamed fork of `pingdotgg/t3code`. Upstream syncs can reintroduc
 - GitHub Releases with desktop artifacts are the default release target for this fork.
 - External release steps such as Vercel deploy, Discord announcement, or release finalization/version-bump automation should stay opt-in behind fork-specific repository variables.
 
+## Fork Rename Policy
+
+The user-facing project name is `In2Peta ADE`, but this repo still inherits some compatibility identifiers from upstream `t3code`. During upstream syncs, do not perform broad search-and-replace renames without checking whether the string is branding or a stable technical identifier.
+
+- Preserve visible product branding as `In2Peta ADE` and fork-specific env vars/secrets with the `IN2PETAADE_` prefix.
+- Preserve compatibility identifiers where tests or persisted state depend on them, especially git worktree branch prefixes such as `t3code/...`.
+- The shared git remote normalization tests intentionally use upstream-style fixture names like `T3Code`; do not rename those fixture inputs to `In2PetaADE` unless the expected behavior is also intentionally changed.
+- Browser/client persistence tests must use the active app storage key, currently `in2petaade:client-settings:v1`.
+- When resolving upstream conflicts, prefer reapplying fork branding at UI/config boundaries while keeping protocol, storage, migration, package, and git compatibility strings stable unless there is a deliberate migration plan.
+
 ## Core Priorities
 
 1. Performance first.
