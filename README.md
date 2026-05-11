@@ -14,25 +14,7 @@ In2Peta ADE is a minimal web GUI for coding agents (currently Codex, Claude, and
 
 ### Desktop app
 
-Install the latest version of the desktop app from [GitHub Releases](https://github.com/In2Peta-hub/In2Peta-ADE/releases), or from your favorite package registry:
-
-#### Windows (`winget`)
-
-```bash
-winget install In2Peta.In2PetaADE
-```
-
-#### macOS (Homebrew)
-
-```bash
-brew install --cask in2peta-ade
-```
-
-#### Arch Linux (AUR)
-
-```bash
-yay -S in2petaade-bin
-```
+Install the latest version of the desktop app from [GitHub Releases](https://github.com/In2Peta-hub/In2Peta-ADE/releases).
 
 ## Screenshots
 
