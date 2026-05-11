@@ -12,12 +12,6 @@ In2Peta ADE is a minimal web GUI for coding agents (currently Codex, Claude, and
 > - Claude: install [Claude Code](https://claude.com/product/claude-code) and run `claude auth login`
 > - OpenCode: install [OpenCode](https://opencode.ai) and run `opencode auth login`
 
-### Run without installing
-
-```bash
-npx in2peta-ade
-```
-
 ### Desktop app
 
 Install the latest version of the desktop app from [GitHub Releases](https://github.com/In2Peta-hub/In2Peta-ADE/releases), or from your favorite package registry:
