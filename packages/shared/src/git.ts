@@ -10,8 +10,8 @@ import * as Effect from "effect/Effect";
 import * as Random from "effect/Random";
 import { detectSourceControlProviderFromRemoteUrl } from "./sourceControl.ts";
 
-export const WORKTREE_BRANCH_PREFIX = "in2petaade";
-const TEMP_WORKTREE_BRANCH_PREFIXES = [WORKTREE_BRANCH_PREFIX, "t3code"] as const;
+export const WORKTREE_BRANCH_PREFIX = "t3code";
+const TEMP_WORKTREE_BRANCH_PREFIXES = [WORKTREE_BRANCH_PREFIX, "in2petaade"] as const;
 const TEMP_WORKTREE_BRANCH_PATTERN = new RegExp(
   `^(?:${TEMP_WORKTREE_BRANCH_PREFIXES.join("|")})\\/[0-9a-f]{8}$`,
 );
