@@ -118,7 +118,9 @@ const withIdentity = <A, E, R>(
         Layer.provideMerge(
           FileSystem.layerNoop({
             exists: (path) =>
-              Effect.succeed(input.legacyPathExists === true && path.includes("In2Peta ADE (Alpha)")),
+              Effect.succeed(
+                input.legacyPathExists === true && path.includes("In2Peta ADE (Alpha)"),
+              ),
             readFileString: () =>
               Effect.succeed(input.packageJson ?? '{"in2petaAdeCommitHash":"abcdef1234567890"}'),
           }),

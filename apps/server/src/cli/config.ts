@@ -84,12 +84,16 @@ export const tailscaleServePortFlag = Flag.integer("tailscale-serve-port").pipe(
 const EnvServerConfig = Config.all({
   logLevel: Config.logLevel("IN2PETAADE_LOG_LEVEL").pipe(Config.withDefault("Info")),
   traceMinLevel: Config.logLevel("IN2PETAADE_TRACE_MIN_LEVEL").pipe(Config.withDefault("Info")),
-  traceTimingEnabled: Config.boolean("IN2PETAADE_TRACE_TIMING_ENABLED").pipe(Config.withDefault(true)),
+  traceTimingEnabled: Config.boolean("IN2PETAADE_TRACE_TIMING_ENABLED").pipe(
+    Config.withDefault(true),
+  ),
   traceFile: Config.string("IN2PETAADE_TRACE_FILE").pipe(
     Config.option,
     Config.map(Option.getOrUndefined),
   ),
-  traceMaxBytes: Config.int("IN2PETAADE_TRACE_MAX_BYTES").pipe(Config.withDefault(10 * 1024 * 1024)),
+  traceMaxBytes: Config.int("IN2PETAADE_TRACE_MAX_BYTES").pipe(
+    Config.withDefault(10 * 1024 * 1024),
+  ),
   traceMaxFiles: Config.int("IN2PETAADE_TRACE_MAX_FILES").pipe(Config.withDefault(10)),
   traceBatchWindowMs: Config.int("IN2PETAADE_TRACE_BATCH_WINDOW_MS").pipe(Config.withDefault(200)),
   otlpTracesUrl: Config.string("IN2PETAADE_OTLP_TRACES_URL").pipe(
@@ -103,7 +107,9 @@ const EnvServerConfig = Config.all({
   otlpExportIntervalMs: Config.int("IN2PETAADE_OTLP_EXPORT_INTERVAL_MS").pipe(
     Config.withDefault(10_000),
   ),
-  otlpServiceName: Config.string("IN2PETAADE_OTLP_SERVICE_NAME").pipe(Config.withDefault("t3-server")),
+  otlpServiceName: Config.string("IN2PETAADE_OTLP_SERVICE_NAME").pipe(
+    Config.withDefault("t3-server"),
+  ),
   mode: Config.schema(RuntimeMode, "IN2PETAADE_MODE").pipe(
     Config.option,
     Config.map(Option.getOrUndefined),

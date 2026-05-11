@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 
 const isDevelopment = Boolean(process.env.VITE_DEV_SERVER_URL);
 const APP_DISPLAY_NAME = isDevelopment ? "In2Peta ADE (Dev)" : "In2Peta ADE (Alpha)";
-const APP_BUNDLE_ID = isDevelopment ? "com.t3tools.t3code.dev" : "com.t3tools.t3code";
+const APP_BUNDLE_ID = isDevelopment ? "com.in2peta.ade.dev" : "com.in2peta.ade";
 const LAUNCHER_VERSION = 2;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

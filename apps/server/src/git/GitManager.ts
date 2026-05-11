@@ -1301,7 +1301,7 @@ export const makeGitManager = Effect.fn("makeGitManager")(function* () {
       modelSelection,
     });
 
-    const bodyFile = path.join(tempDir, `t3code-pr-body-${process.pid}-${randomUUID()}.md`);
+    const bodyFile = path.join(tempDir, `in2petaade-pr-body-${process.pid}-${randomUUID()}.md`);
     yield* fileSystem
       .writeFileString(bodyFile, generated.body)
       .pipe(
