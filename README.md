@@ -1,8 +1,6 @@
 # In2Peta ADE
 
-In2Peta ADE is a minimal web GUI for coding agents (currently Codex and Claude, more coming soon).
-
-![In2Peta ADE Home Screen](assets/screenshots/app-home.png)
+In2Peta ADE is a minimal web GUI for coding agents (currently Codex, Claude, and OpenCode, more coming soon).
 
 ## Installation
 
