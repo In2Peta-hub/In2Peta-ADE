@@ -11,7 +11,10 @@ import * as Random from "effect/Random";
 import { detectSourceControlProviderFromRemoteUrl } from "./sourceControl.ts";
 
 export const WORKTREE_BRANCH_PREFIX = "in2petaade";
-const TEMP_WORKTREE_BRANCH_PATTERN = new RegExp(`^${WORKTREE_BRANCH_PREFIX}\\/[0-9a-f]{8}$`);
+const TEMP_WORKTREE_BRANCH_PREFIXES = [WORKTREE_BRANCH_PREFIX, "t3code"] as const;
+const TEMP_WORKTREE_BRANCH_PATTERN = new RegExp(
+  `^(?:${TEMP_WORKTREE_BRANCH_PREFIXES.join("|")})\\/[0-9a-f]{8}$`,
+);
 
 /**
  * Sanitize an arbitrary string into a valid, lowercase git refName fragment.
