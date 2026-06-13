@@ -338,7 +338,7 @@ it.layer(
       const unsubscribe = yield* manager.attachStream(
         openInput({
           env: {
-            T3CODE_WORKTREE_PATH: "/tmp/should-not-restart",
+            IN2PETAADE_WORKTREE_PATH: "/tmp/should-not-restart",
           },
           worktreePath: "/tmp/should-not-restart",
         }),
@@ -376,7 +376,7 @@ it.layer(
         {
           ...openInput({
             env: {
-              T3CODE_WORKTREE_PATH: "/tmp/restart-requested",
+              IN2PETAADE_WORKTREE_PATH: "/tmp/restart-requested",
             },
             worktreePath: "/tmp/restart-requested",
           }),
