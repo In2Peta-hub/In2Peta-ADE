@@ -1087,7 +1087,7 @@ describe("ProviderModelPicker", () => {
 
   it("filters favorites to compatible models in locked mode", async () => {
     localStorage.setItem(
-      "t3code:client-settings:v1",
+      "in2petaade:client-settings:v1",
       JSON.stringify({
         ...DEFAULT_CLIENT_SETTINGS,
         favorites: [
@@ -1113,7 +1113,7 @@ describe("ProviderModelPicker", () => {
       });
     } finally {
       await mounted.cleanup();
-      localStorage.removeItem("t3code:client-settings:v1");
+      localStorage.removeItem("in2petaade:client-settings:v1");
     }
   });
 
