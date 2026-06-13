@@ -157,12 +157,66 @@ export class BrowserWsRpcHarness {
           if (!this.client) {
             return;
           }
-          const encoded = this.parser.encode(response);
+
+          // ---------------------------------------------------------------------------
+          // FIX: RpcServer.makeNoSerialization sends raw Exit objects with raw Effect
+          // Cause class instances. When JSON.stringify serializes a Cause, it produces
+          // {"_id":"Cause","failures":[...]} but the RPC client's decodeExit schema
+          // expects the wire format where exit.cause is an ARRAY of failure objects.
+          //
+          // This causes: SchemaError(Expected array, got {"_id":"Cause",...})
+          //
+          // We detect Exit messages with Failure causes and convert the raw Cause to
+          // wire format before serialization.
+          //
+          // AGENTS: If you see browser tests timing out with "WebSocket RPC subscription
+          // failed" errors containing "SchemaError(Expected array, got", this is the
+          // likely cause. Check if the Effect/RPC library version changed Cause
+          // serialization format.
+          // ---------------------------------------------------------------------------
+          const encoded = this.parser.encode(this.encodeResponse(response));
           if (typeof encoded === "string") {
             this.client.send(encoded);
           }
         }),
     };
+  }
+
+  /**
+   * Encodes an RPC response for the wire format.
+   *
+   * The key fix: `RpcServer.makeNoSerialization` passes raw Exit objects with
+   * raw Cause instances to `onFromServer`. The client's `decodeExit` schema
+   * expects the wire format where `exit.cause` is an array of failure objects,
+   * not a serialized Cause class instance.
+   *
+   * @see https://github.com/Effect-TS/effect/issues - makeNoSerialization encoding
+   */
+  private encodeResponse(response: unknown): unknown {
+    if (
+      response &&
+      typeof response === "object" &&
+      "_tag" in response &&
+      response._tag === "Exit" &&
+      "exit" in response
+    ) {
+      const exit = response.exit as { _tag: string; cause?: unknown };
+      if (exit._tag === "Failure" && exit.cause && typeof exit.cause === "object") {
+        const cause = exit.cause as Record<string, unknown>;
+        // Raw Cause instances have a "failures" property (from JSON serialization)
+        // that matches the wire format array the client expects
+        if ("failures" in cause && Array.isArray(cause.failures)) {
+          return {
+            ...response,
+            exit: {
+              ...exit,
+              cause: cause.failures,
+            },
+          };
+        }
+      }
+    }
+    return response;
   }
 
   private handleUnary(method: string, payload: unknown) {
