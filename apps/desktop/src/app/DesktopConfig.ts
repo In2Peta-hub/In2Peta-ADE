@@ -37,6 +37,7 @@ export const DesktopConfig = Config.all({
   xdgConfigHome: trimmedString("XDG_CONFIG_HOME"),
   t3Home: trimmedString("IN2PETAADE_HOME"),
   devServerUrl: Config.url("VITE_DEV_SERVER_URL").pipe(Config.option),
+  appUserModelIdOverride: trimmedString("IN2PETAADE_DESKTOP_APP_USER_MODEL_ID"),
   devRemoteT3ServerEntryPath: trimmedString("IN2PETAADE_DEV_REMOTE_T3_SERVER_ENTRY_PATH"),
   configuredBackendPort: Config.port("IN2PETAADE_PORT").pipe(Config.option),
   commitHashOverride: trimmedString("IN2PETAADE_COMMIT_HASH"),
