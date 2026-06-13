@@ -190,6 +190,11 @@ export class BrowserWsRpcHarness {
    * expects the wire format where `exit.cause` is an array of failure objects,
    * not a serialized Cause class instance.
    *
+   * IMPORTANT: Raw Effect Exit/Cause objects are created via Object.create(Proto),
+   * so `_tag` and other properties live on the PROTOTYPE, not as own properties.
+   * We CANNOT use `{ ...exit }` spread — it only copies own enumerable properties
+   * and loses `_tag`. Instead we must construct replacement objects from scratch.
+   *
    * @see https://github.com/Effect-TS/effect/issues - makeNoSerialization encoding
    */
   private encodeResponse(response: unknown): unknown {
@@ -197,20 +202,27 @@ export class BrowserWsRpcHarness {
       response &&
       typeof response === "object" &&
       "_tag" in response &&
-      response._tag === "Exit" &&
+      (response as Record<string, unknown>)._tag === "Exit" &&
       "exit" in response
     ) {
-      const exit = response.exit as { _tag: string; cause?: unknown };
-      if (exit._tag === "Failure" && exit.cause && typeof exit.cause === "object") {
+      const resp = response as Record<string, unknown>;
+      const exit = resp.exit as Record<string, unknown> | undefined;
+      if (exit && exit._tag === "Failure" && exit.cause && typeof exit.cause === "object") {
         const cause = exit.cause as Record<string, unknown>;
-        // Raw Cause instances have a "failures" property (from JSON serialization)
-        // that matches the wire format array the client expects
-        if ("failures" in cause && Array.isArray(cause.failures)) {
+        // Effect's CauseImpl class stores reasons in `this.reasons` (own property)
+        // and exposes them via toJSON() as { _id: "Cause", failures: [...] }.
+        // The client's decodeExit schema expects exit.cause to be an ARRAY of failure objects.
+        const reasons = cause.reasons ?? cause.failures;
+        if (Array.isArray(reasons)) {
+          // Do NOT spread the raw Exit object — _tag is on the prototype and would be lost.
+          // Construct a plain object with the correct shape for JSON serialization.
           return {
-            ...response,
+            _tag: "Exit",
+            clientId: resp.clientId,
+            requestId: resp.requestId,
             exit: {
-              ...exit,
-              cause: cause.failures,
+              _tag: "Failure",
+              cause: reasons,
             },
           };
         }
