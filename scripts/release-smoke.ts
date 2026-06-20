@@ -1,21 +1,13 @@
 // @effect-diagnostics nodeBuiltinImport:off
-import { execFileSync } from "node:child_process";
-import {
-  cpSync,
-  existsSync,
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import * as NodeChildProcess from "node:child_process";
+import * as NodeFS from "node:fs";
+import * as NodeOS from "node:os";
+import * as NodePath from "node:path";
+import * as NodeURL from "node:url";
 import * as Console from "effect/Console";
 import * as Effect from "effect/Effect";
 
-const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const repoRoot = NodePath.resolve(NodePath.dirname(NodeURL.fileURLToPath(import.meta.url)), "..");
 
 const workspaceFiles = [
   "package.json",
@@ -26,6 +18,7 @@ const workspaceFiles = [
   "apps/web/package.json",
   "apps/mobile/package.json",
   "apps/mobile/deps/react-native-nitro-markdown-0.5.0.tgz",
+  "apps/mobile/modules/t3-markdown-text/package.json",
   "apps/mobile/modules/t3-review-diff/package.json",
   "apps/mobile/modules/t3-terminal/package.json",
   "apps/marketing/package.json",
@@ -43,26 +36,26 @@ const workspaceFiles = [
 
 function copyWorkspaceManifestFixture(targetRoot: string): void {
   for (const relativePath of workspaceFiles) {
-    const sourcePath = resolve(repoRoot, relativePath);
-    const destinationPath = resolve(targetRoot, relativePath);
-    mkdirSync(dirname(destinationPath), { recursive: true });
-    cpSync(sourcePath, destinationPath);
+    const sourcePath = NodePath.resolve(repoRoot, relativePath);
+    const destinationPath = NodePath.resolve(targetRoot, relativePath);
+    NodeFS.mkdirSync(NodePath.dirname(destinationPath), { recursive: true });
+    NodeFS.cpSync(sourcePath, destinationPath);
   }
 
-  const patchesDirectory = resolve(repoRoot, "patches");
-  if (existsSync(patchesDirectory)) {
-    cpSync(patchesDirectory, resolve(targetRoot, "patches"), { recursive: true });
+  const patchesDirectory = NodePath.resolve(repoRoot, "patches");
+  if (NodeFS.existsSync(patchesDirectory)) {
+    NodeFS.cpSync(patchesDirectory, NodePath.resolve(targetRoot, "patches"), { recursive: true });
   }
 }
 
 function writeMacManifestFixtures(targetRoot: string): { arm64Path: string; x64Path: string } {
-  const assetDirectory = resolve(targetRoot, "release-assets");
-  mkdirSync(assetDirectory, { recursive: true });
+  const assetDirectory = NodePath.resolve(targetRoot, "release-assets");
+  NodeFS.mkdirSync(assetDirectory, { recursive: true });
 
-  const arm64Path = resolve(assetDirectory, "latest-mac.yml");
-  const x64Path = resolve(assetDirectory, "latest-mac-x64.yml");
+  const arm64Path = NodePath.resolve(assetDirectory, "latest-mac.yml");
+  const x64Path = NodePath.resolve(assetDirectory, "latest-mac-x64.yml");
 
-  writeFileSync(
+  NodeFS.writeFileSync(
     arm64Path,
     `version: 9.9.9-smoke.0
 files:
@@ -78,7 +71,7 @@ releaseDate: '2026-03-08T10:32:14.587Z'
 `,
   );
 
-  writeFileSync(
+  NodeFS.writeFileSync(
     x64Path,
     `version: 9.9.9-smoke.0
 files:
@@ -101,13 +94,13 @@ function writeWindowsManifestFixtures(
   targetRoot: string,
   channel: string,
 ): { arm64Path: string; x64Path: string } {
-  const assetDirectory = resolve(targetRoot, "release-assets");
-  mkdirSync(assetDirectory, { recursive: true });
+  const assetDirectory = NodePath.resolve(targetRoot, "release-assets");
+  NodeFS.mkdirSync(assetDirectory, { recursive: true });
 
-  const arm64Path = resolve(assetDirectory, `${channel}-win-arm64.yml`);
-  const x64Path = resolve(assetDirectory, `${channel}-win-x64.yml`);
+  const arm64Path = NodePath.resolve(assetDirectory, `${channel}-win-arm64.yml`);
+  const x64Path = NodePath.resolve(assetDirectory, `${channel}-win-x64.yml`);
 
-  writeFileSync(
+  NodeFS.writeFileSync(
     arm64Path,
     `version: 9.9.9-smoke.0
 files:
@@ -123,7 +116,7 @@ releaseDate: '2026-03-08T10:32:14.587Z'
 `,
   );
 
-  writeFileSync(
+  NodeFS.writeFileSync(
     x64Path,
     `version: 9.9.9-smoke.0
 files:
@@ -146,11 +139,11 @@ function writeWindowsBuilderDebugFixtures(targetRoot: string): {
   arm64Path: string;
   x64Path: string;
 } {
-  const assetDirectory = resolve(targetRoot, "release-assets");
-  mkdirSync(assetDirectory, { recursive: true });
+  const assetDirectory = NodePath.resolve(targetRoot, "release-assets");
+  NodeFS.mkdirSync(assetDirectory, { recursive: true });
 
-  const arm64Path = resolve(assetDirectory, "builder-debug-win-arm64.yml");
-  const x64Path = resolve(assetDirectory, "builder-debug-win-x64.yml");
+  const arm64Path = NodePath.resolve(assetDirectory, "builder-debug-win-arm64.yml");
+  const x64Path = NodePath.resolve(assetDirectory, "builder-debug-win-x64.yml");
   const debugFixture = `arm64:
   firstOrDefaultFilePatterns:
     - '**/*'
@@ -159,8 +152,8 @@ nsis:
     !include "example.nsh"
 `;
 
-  writeFileSync(arm64Path, debugFixture);
-  writeFileSync(x64Path, debugFixture);
+  NodeFS.writeFileSync(arm64Path, debugFixture);
+  NodeFS.writeFileSync(x64Path, debugFixture);
 
   return { arm64Path, x64Path };
 }
@@ -171,13 +164,13 @@ function assertContains(haystack: string, needle: string, message: string): void
 }
 
 function assertExists(path: string, message: string): void {
-  if (!existsSync(path)) {
+  if (!NodeFS.existsSync(path)) {
     throw new Error(message);
   }
 }
 
 function assertPackageVersion(path: string, version: string): void {
-  const packageJson = JSON.parse(readFileSync(path, "utf8")) as {
+  const packageJson = JSON.parse(NodeFS.readFileSync(path, "utf8")) as {
     readonly version?: unknown;
   };
 
@@ -187,20 +180,20 @@ function assertPackageVersion(path: string, version: string): void {
 }
 
 function assertMissing(path: string, message: string): void {
-  if (existsSync(path)) {
+  if (NodeFS.existsSync(path)) {
     throw new Error(message);
   }
 }
 
-const tempRoot = mkdtempSync(join(tmpdir(), "t3-release-smoke-"));
+const tempRoot = NodeFS.mkdtempSync(NodePath.join(NodeOS.tmpdir(), "t3-release-smoke-"));
 
 try {
   copyWorkspaceManifestFixture(tempRoot);
 
-  execFileSync(
+  NodeChildProcess.execFileSync(
     process.execPath,
     [
-      resolve(repoRoot, "scripts/update-release-package-versions.ts"),
+      NodePath.resolve(repoRoot, "scripts/update-release-package-versions.ts"),
       "9.9.9-smoke.0",
       "--root",
       tempRoot,
@@ -211,14 +204,14 @@ try {
     },
   );
 
-  rmSync(resolve(tempRoot, "pnpm-lock.yaml"), { force: true });
+  NodeFS.rmSync(NodePath.resolve(tempRoot, "pnpm-lock.yaml"), { force: true });
 
-  execFileSync("vp", ["install", "--lockfile-only", "--ignore-scripts"], {
+  NodeChildProcess.execFileSync("vp", ["install", "--lockfile-only", "--ignore-scripts"], {
     cwd: tempRoot,
     stdio: "inherit",
   });
 
-  const lockfile = readFileSync(resolve(tempRoot, "pnpm-lock.yaml"), "utf8");
+  const lockfile = NodeFS.readFileSync(NodePath.resolve(tempRoot, "pnpm-lock.yaml"), "utf8");
   assertContains(lockfile, "lockfileVersion:", "Expected pnpm-lock.yaml to be regenerated.");
 
   for (const relativePath of [
@@ -227,14 +220,47 @@ try {
     "apps/web/package.json",
     "packages/contracts/package.json",
   ]) {
-    assertPackageVersion(resolve(tempRoot, relativePath), "9.9.9-smoke.0");
+    assertPackageVersion(NodePath.resolve(tempRoot, relativePath), "9.9.9-smoke.0");
   }
 
-  const { arm64Path, x64Path } = writeMacManifestFixtures(tempRoot);
-  execFileSync(
+  const nightlyReleaseMetadata = NodeChildProcess.execFileSync(
     process.execPath,
     [
-      resolve(repoRoot, "scripts/merge-update-manifests.ts"),
+      NodePath.resolve(repoRoot, "scripts/resolve-nightly-release.ts"),
+      "--date",
+      "20260413",
+      "--run-number",
+      "321",
+      "--sha",
+      "abcdef1234567890",
+      "--root",
+      tempRoot,
+    ],
+    {
+      cwd: repoRoot,
+      encoding: "utf8",
+    },
+  );
+  assertContains(
+    nightlyReleaseMetadata,
+    "version=9.9.10-nightly.20260413.321",
+    "Expected nightly metadata to contain the derived nightly version.",
+  );
+  assertContains(
+    nightlyReleaseMetadata,
+    "tag=v9.9.10-nightly.20260413.321",
+    "Expected nightly metadata to contain the derived nightly tag.",
+  );
+  assertContains(
+    nightlyReleaseMetadata,
+    "name=In2Peta ADE Nightly 9.9.10-nightly.20260413.321 (abcdef123456)",
+    "Expected nightly metadata to include the short commit SHA in the release name.",
+  );
+
+  NodeChildProcess.execFileSync(
+    process.execPath,
+    [
+      NodePath.resolve(repoRoot, "scripts/merge-update-manifests.ts"),
       "--platform",
       "mac",
       arm64Path,
@@ -246,7 +272,7 @@ try {
     },
   );
 
-  const mergedManifest = readFileSync(arm64Path, "utf8");
+  const mergedManifest = NodeFS.readFileSync(arm64Path, "utf8");
   assertContains(
     mergedManifest,
     "T3-Code-9.9.9-smoke.0-arm64.zip",
@@ -262,18 +288,21 @@ try {
     tempRoot,
     "latest",
   );
-  const mergedWindowsManifestPath = resolve(tempRoot, "release-assets/latest.yml");
+  const mergedWindowsManifestPath = NodePath.resolve(tempRoot, "release-assets/latest.yml");
+  const { arm64Path: nightlyWinArm64Path, x64Path: nightlyWinX64Path } =
+    writeWindowsManifestFixtures(tempRoot, "nightly");
+  const mergedNightlyWindowsManifestPath = NodePath.resolve(tempRoot, "release-assets/nightly.yml");
   const { arm64Path: previewWinArm64Path, x64Path: previewWinX64Path } =
     writeWindowsManifestFixtures(tempRoot, "preview");
-  const mergedPreviewWindowsManifestPath = resolve(tempRoot, "release-assets/preview.yml");
+  const mergedPreviewWindowsManifestPath = NodePath.resolve(tempRoot, "release-assets/preview.yml");
   const { arm64Path: winDebugArm64Path, x64Path: winDebugX64Path } =
     writeWindowsBuilderDebugFixtures(tempRoot);
-  execFileSync(
+  NodeChildProcess.execFileSync(
     "bash",
     [
       "-lc",
       `
-        release_assets_dir=${JSON.stringify(resolve(tempRoot, "release-assets"))}
+        release_assets_dir=${JSON.stringify(NodePath.resolve(tempRoot, "release-assets"))}
         shopt -s nullglob
         found_windows_manifest=false
         for x64_manifest in "$release_assets_dir"/*-win-x64.yml; do
@@ -289,7 +318,7 @@ try {
           fi
 
           found_windows_manifest=true
-          ${JSON.stringify(process.execPath)} ${JSON.stringify(resolve(repoRoot, "scripts/merge-update-manifests.ts"))} --platform win \
+          ${JSON.stringify(process.execPath)} ${JSON.stringify(NodePath.resolve(repoRoot, "scripts/merge-update-manifests.ts"))} --platform win \
             "$arm64_manifest" \
             "$x64_manifest" \
             "$output_manifest"
@@ -308,7 +337,7 @@ try {
     },
   );
 
-  const mergedWindowsManifest = readFileSync(mergedWindowsManifestPath, "utf8");
+  const mergedWindowsManifest = NodeFS.readFileSync(mergedWindowsManifestPath, "utf8");
   assertContains(
     mergedWindowsManifest,
     "T3-Code-9.9.9-smoke.0-arm64.exe",
@@ -319,7 +348,24 @@ try {
     "T3-Code-9.9.9-smoke.0-x64.exe",
     "Merged Windows manifest is missing the x64 asset.",
   );
-  const mergedPreviewWindowsManifest = readFileSync(mergedPreviewWindowsManifestPath, "utf8");
+  const mergedNightlyWindowsManifest = NodeFS.readFileSync(
+    mergedNightlyWindowsManifestPath,
+    "utf8",
+  );
+  assertContains(
+    mergedNightlyWindowsManifest,
+    "T3-Code-9.9.9-smoke.0-arm64.exe",
+    "Merged nightly Windows manifest is missing the arm64 asset.",
+  );
+  assertContains(
+    mergedNightlyWindowsManifest,
+    "T3-Code-9.9.9-smoke.0-x64.exe",
+    "Merged nightly Windows manifest is missing the x64 asset.",
+  );
+  const mergedPreviewWindowsManifest = NodeFS.readFileSync(
+    mergedPreviewWindowsManifestPath,
+    "utf8",
+  );
   assertContains(
     mergedPreviewWindowsManifest,
     "T3-Code-9.9.9-smoke.0-arm64.exe",
@@ -354,5 +400,5 @@ try {
 
   Effect.runSync(Console.log("Release smoke checks passed."));
 } finally {
-  rmSync(tempRoot, { recursive: true, force: true });
+  NodeFS.rmSync(tempRoot, { recursive: true, force: true });
 }
