@@ -253,9 +253,7 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
       assert.equal(config.appId, "com.in2peta.ade");
       assert.equal(mac.entitlements, "/tmp/entitlements.mac.plist");
       assert.equal(mac.provisioningProfile, "/tmp/t3code.provisionprofile");
-      assert.deepStrictEqual(mac.protocols, [
-        { name: "In2Peta ADE", schemes: ["in2petaade"] },
-      ]);
+      assert.deepStrictEqual(mac.protocols, [{ name: "In2Peta ADE", schemes: ["in2petaade"] }]);
     }).pipe(Effect.provide(ConfigProvider.layer(ConfigProvider.fromEnv({ env: {} })))),
   );
 
