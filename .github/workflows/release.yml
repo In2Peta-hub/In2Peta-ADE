@@ -94,7 +94,6 @@ jobs:
             --current-tag "${{ steps.release_meta.outputs.tag }}" \
             --github-output
 
-
   build:
     name: Build ${{ matrix.label }}
     needs: preflight
@@ -361,7 +360,6 @@ jobs:
           path: release-publish/*
           if-no-files-found: error
 
-
   release:
     name: Publish GitHub Release
     needs: [preflight, build]
@@ -449,7 +447,6 @@ jobs:
             release-assets/*.yml
           fail_on_unmatched_files: true
           token: ${{ steps.app_token.outputs.token }}
-
 
   finalize:
     name: Finalize release

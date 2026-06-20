@@ -61,7 +61,6 @@ jobs:
       - name: Test
         run: vp run test
 
-
   mobile_native_static_analysis:
     name: Mobile Native Static Analysis
     runs-on: macos-15

@@ -257,14 +257,15 @@ try {
     "Expected nightly metadata to include the short commit SHA in the release name.",
   );
 
+  const { arm64Path: macArm64Path, x64Path: macX64Path } = writeMacManifestFixtures(tempRoot);
   NodeChildProcess.execFileSync(
     process.execPath,
     [
       NodePath.resolve(repoRoot, "scripts/merge-update-manifests.ts"),
       "--platform",
       "mac",
-      arm64Path,
-      x64Path,
+      macArm64Path,
+      macX64Path,
     ],
     {
       cwd: repoRoot,
@@ -272,7 +273,7 @@ try {
     },
   );
 
-  const mergedManifest = NodeFS.readFileSync(arm64Path, "utf8");
+  const mergedManifest = NodeFS.readFileSync(macArm64Path, "utf8");
   assertContains(
     mergedManifest,
     "T3-Code-9.9.9-smoke.0-arm64.zip",
@@ -297,6 +298,7 @@ try {
   const mergedPreviewWindowsManifestPath = NodePath.resolve(tempRoot, "release-assets/preview.yml");
   const { arm64Path: winDebugArm64Path, x64Path: winDebugX64Path } =
     writeWindowsBuilderDebugFixtures(tempRoot);
+  const { arm64Path, x64Path } = writeMacManifestFixtures(tempRoot);
   NodeChildProcess.execFileSync(
     "bash",
     [
