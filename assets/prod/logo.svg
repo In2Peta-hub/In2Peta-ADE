@@ -1,6 +1,19 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="128" height="128" rx="24" fill="#0A0A0A"/>
-<path d="M38 36H90V44H66V92H58V44H38V36Z" fill="#ffffff"/>
-<path d="M74 56L94 76L74 96V84L84 76L74 68V56Z" fill="#00D4AA"/>
-<path d="M54 56L34 76L54 96V84L44 76L54 68V56Z" fill="#00D4AA"/>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F2FE" />
+      <stop offset="100%" stop-color="#00D4AA" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="28" fill="#0A0A0A"/>
+  <!-- Border -->
+  <rect x="2" y="2" width="124" height="124" rx="26" stroke="url(#grad)" stroke-width="3.5" opacity="0.95"/>
+  
+  <!-- Text monogram centered -->
+  <text x="50%" y="69" dominant-baseline="middle" text-anchor="middle" font-family="Google Sans, system-ui, -apple-system, sans-serif" font-size="44" font-weight="900" letter-spacing="-1.5">
+    <tspan fill="#FFFFFF">I</tspan>
+    <tspan fill="url(#grad)">2</tspan>
+    <tspan fill="#FFFFFF">P</tspan>
+  </text>
 </svg>
