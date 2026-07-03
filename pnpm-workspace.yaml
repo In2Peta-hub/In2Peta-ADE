@@ -81,6 +81,7 @@ overrides:
   "@effect/vitest": "catalog:"
   "@effect/vitest>vitest": "-"
   "@expo/metro-config": 56.0.14
+  expo-modules-jsi: 56.0.10
   "@pierre/diffs>@shikijs/transformers": ^4.2.0
   "@types/node": "catalog:"
   effect: "catalog:"
