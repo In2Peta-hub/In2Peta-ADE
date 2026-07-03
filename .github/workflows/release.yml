@@ -254,6 +254,10 @@ jobs:
           AZURE_TRUSTED_SIGNING_CERTIFICATE_PROFILE_NAME: ${{ secrets.AZURE_TRUSTED_SIGNING_CERTIFICATE_PROFILE_NAME }}
           AZURE_TRUSTED_SIGNING_PUBLISHER_NAME: ${{ secrets.AZURE_TRUSTED_SIGNING_PUBLISHER_NAME }}
         run: |
+          if [[ "${{ matrix.platform }}" == "mac" ]]; then
+            ulimit -n 65536 || ulimit -n 10240 || true
+          fi
+
           args=(
             --platform "${{ matrix.platform }}"
             --target "${{ matrix.target }}"
