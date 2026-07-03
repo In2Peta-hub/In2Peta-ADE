@@ -436,7 +436,7 @@ jobs:
 
   finalize:
     name: Finalize release
-    if: ${{ !failure() && !cancelled() && needs.preflight.result == 'success' && needs.release.result == 'success' }}
+    if: ${{ !failure() && !cancelled() && needs.preflight.result == 'success' && needs.release.result == 'success' && vars.IN2PETAADE_FINALIZE_RELEASE == 'true' }}
     needs: [preflight, release]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
