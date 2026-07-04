@@ -10,6 +10,7 @@ import { ChildProcessSpawner } from "effect/unstable/process";
 
 import {
   BuildCommandFailedError,
+  createAsarUnpackPatterns,
   createStageWorkspaceConfig,
   createStagePnpmConfig,
   createBuildConfig,
@@ -35,6 +36,7 @@ import {
   resolveMockUpdateServerUrl,
   stageLinuxIconSize,
   STAGE_INSTALL_ARGS,
+  WINDOWS_WSL_ASAR_UNPACK,
 } from "./build-desktop-artifact.ts";
 import { BRAND_ASSET_PATHS } from "./lib/brand-assets.ts";
 import { HostProcessArchitecture, HostProcessPlatform } from "@t3tools/shared/hostProcess";
@@ -236,6 +238,16 @@ it.layer(NodeServices.layer)("build-desktop-artifact", (it) => {
 
   it("unpacks the fff shared library for filesystem and FFI access", () => {
     assert.deepStrictEqual(DESKTOP_ASAR_UNPACK, ["node_modules/@ff-labs/fff-bin-*/**/*"]);
+  });
+
+  it("keeps full dependency tree unpacking scoped to Windows WSL builds", () => {
+    assert.deepStrictEqual(WINDOWS_WSL_ASAR_UNPACK, ["apps/server/dist/**", "**/node_modules/**"]);
+    assert.deepStrictEqual(createAsarUnpackPatterns("mac"), DESKTOP_ASAR_UNPACK);
+    assert.deepStrictEqual(createAsarUnpackPatterns("linux"), DESKTOP_ASAR_UNPACK);
+    assert.deepStrictEqual(createAsarUnpackPatterns("win"), [
+      ...DESKTOP_ASAR_UNPACK,
+      ...WINDOWS_WSL_ASAR_UNPACK,
+    ]);
   });
 
   it.effect("preserves both Linux icon resize failures with structural context", () => {
